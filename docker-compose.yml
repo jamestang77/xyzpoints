@@ -1,0 +1,41 @@
+services:
+  xyzpoints:
+    image: bitnami/laravel:latest # Replace with your app's Docker image
+    container_name: xyzpoints
+    volumes:
+      - /var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    expose:
+      - "5000"           # Internal port of the app (accessible to the Nginx container)
+    networks:
+      - network1
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"          # Map port 80 on the host to port 80 in the container
+    volumes:
+      - /var/www/
+      - ./nginx:/etc/nginx/conf.d/ # Bind your custom Nginx config
+    networks:
+      - network1
+    restart: unless-stopped
+
+  portainer:
+    image: portainer/portainer-ce:2.21.5
+    container_name: portainer
+    ports:
+      - "9443:9443"
+      - "9000:9000"          # Map port 80 on the host to port 80 in the container
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # Bind your custom Nginx config
+      - portainer_data:/data  # Persist Portainer data
+    restart: always
+    networks:
+      - network1
+networks:
+   network1:
+    driver: bridge
+volumes:
+   portainer_data:
