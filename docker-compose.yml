@@ -22,20 +22,20 @@ services:
       - network1
     restart: unless-stopped
 
-  portainer:
-    image: portainer/portainer-ce:2.21.5
-    container_name: portainer
-    ports:
-      - "9443:9443"
-      - "9000:9000"          # Map port 80 on the host to port 80 in the container
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock # Bind your custom Nginx config
-      - portainer_data:/data  # Persist Portainer data
-    restart: always
-    networks:
-      - network1
+ # portainer:
+  #  image: portainer/portainer-ce:2.21.5
+  #  container_name: portainer
+  #  ports:
+ #     - "9443:9443"
+ #     - "9000:9000"          # Map port 80 on the host to port 80 in the container
+ #   volumes:
+ #     - /var/run/docker.sock:/var/run/docker.sock # Bind your custom Nginx config
+#      - portainer_data:/data  # Persist Portainer data
+#    restart: always
+#    networks:
+#      - network1
 networks:
    network1:
     driver: bridge
-volumes:
-   portainer_data:
+#volumes:
+  # portainer_data:
